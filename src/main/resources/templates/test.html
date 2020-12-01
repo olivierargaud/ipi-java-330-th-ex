@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Thymeleaf</title>
+    </head>
+
+    <body>
+        <h1>Hello <span th:text="${nom}"></span> !</h1>
+        <h1> <span th:text="${titi}">le text ici ne sera jamais affiché car remlacé par la valeur de titi</span> !</h1>
+        <h1> <span th:text="${tata}"></span> ! avec th:text</h1>
+        <h1> <span th:utext="${tata}"></span> ! avec th:utext</h1>
+
+
+
+
+
+
+
+    </body>
+</html>

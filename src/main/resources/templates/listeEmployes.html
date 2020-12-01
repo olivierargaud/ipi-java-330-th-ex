@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head">
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: menu">
+
+</div>
+
+<div class="container">
+    <h2>Liste des employés</h2>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="btn-group">
+                <a href="http://localhost:8080/employes?page=0&amp;size=10&amp;sortDirection=ASC&amp;sortProperty=matricule#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Nouvel employé
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a href="http://localhost:8080/employes/new/technicien">Technicien</a></li>
+                    <li class="dropdown-item"><a href="http://localhost:8080/employes/new/commercial">Commercial</a></li>
+                    <li class="dropdown-item"><a href="http://localhost:8080/employes/new/manager">Manager</a></li>
+                </ul>
+            </div>
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">
+                        <div th th:switch="${param.sortDirection.toString()}">
+                            <a th:case = "ASC"
+                               th:href="
+                                @{/employes
+                                        (
+                                            page=${param.page},
+                                            size=${param.size},
+                                            sortDirection='DESC',
+                                            sortProperty='matricule'
+                                        )
+                                }">
+                                Matricule
+                                <i class="fa fa-chevron-up"
+                                   th:if="(${param.sortProperty.toString()} == 'matricule')
+                                   and(${param.sortDirection.toString()} == 'ASC')">
+
+                                </i>
+                            </a>
+                            <a th:case = "DESC"
+                               th:href="
+                                @{/employes
+                                        (
+                                            page=${param.page},
+                                            size=${param.size},
+                                            sortDirection='ASC',
+                                            sortProperty='matricule'
+                                        )
+                                }">
+                                Matricule
+                                <i class="fa fa-chevron-down"
+                                   th:if="(${param.sortProperty.toString()} == 'matricule')
+                                   and(${param.sortDirection.toString()} == 'DESC')">
+                                </i>
+                            </a>
+                        </div>
+                        
+                    </th>
+                    <th scope="col">
+                        <div th th:switch="${param.sortDirection.toString()}">
+                            <a th:case = "ASC"
+                               th:href="
+                                @{/employes
+                                        (
+                                            page=${param.page},
+                                            size=${param.size},
+                                            sortDirection='DESC',
+                                            sortProperty='nom'
+                                        )
+                                }">
+                                Nom
+                                <i class="fa fa-chevron-up"
+                                   th:if="(${param.sortProperty.toString()} == 'nom')
+                                   and(${param.sortDirection.toString()} == 'ASC')">
+
+                                </i>
+                            </a>
+                            <a th:case = "DESC"
+                               th:href="
+                                @{/employes
+                                        (
+                                            page=${param.page},
+                                            size=${param.size},
+                                            sortDirection='ASC',
+                                            sortProperty='nom'
+                                        )
+                                }">
+                                Nom
+                                <i class="fa fa-chevron-down"
+                                   th:if="(${param.sortProperty.toString()} == 'nom')
+                                   and(${param.sortDirection.toString()} == 'DESC')">
+                                </i>
+                            </a>
+                        </div>
+
+
+
+                    </th>
+                    <th scope="col">
+                        <div th th:switch="${param.sortDirection.toString()}">
+                            <a th:case = "ASC"
+                               th:href="
+                                @{/employes
+                                        (
+                                            page=${param.page},
+                                            size=${param.size},
+                                            sortDirection='DESC',
+                                            sortProperty='prenom'
+                                        )
+                                }">
+                                Prenom
+                                <i class="fa fa-chevron-up"
+                                   th:if="(${param.sortProperty.toString()} == 'prenom')
+                                   and(${param.sortDirection.toString()} == 'ASC')">
+
+                                </i>
+                            </a>
+                            <a th:case = "DESC"
+                               th:href="
+                                @{/employes
+                                        (
+                                            page=${param.page},
+                                            size=${param.size},
+                                            sortDirection='ASC',
+                                            sortProperty='prenom'
+                                        )
+                                }">
+                                Prenom
+                                <i class="fa fa-chevron-down"
+                                   th:if="(${param.sortProperty.toString()} == 'prenom')
+                                   and(${param.sortDirection.toString()} == 'DESC')">
+                                </i>
+                            </a>
+                        </div>
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="employe : ${listeEmployes}">
+                        <th scope="row" th:text="${employe.matricule}">C00002</th>
+                        <td th:text="${employe.nom}">Poirier></td>
+                        <td th:text="${employe.prenom}">Marie></td>
+                        <td><a th:href="'/employes/'+${employe.id}">Détail</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>
+                        Affichage des employés
+<!--                        <span th:text="${listeEmployes.getNumber()}*${listeEmployes.getNumberOfElements()}+1">68</span>-->
+                        <span th:text="${start}">68</span>
+                        à
+<!--                        <span th:text="${listeEmployes.getNumber()+1}*${listeEmployes.getNumberOfElements()}">10</span>-->
+                        <span th:text="${end}">68</span>
+                        sur un total de
+                        <span th:text="${listeEmployes.totalElements}">1234</span>
+<!--                        <span th:text="${listeEmployes.getTotalElements()}">1234</span>-->
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+<!--                            <li class="page-item">-->
+                            <li class="page-item" th:if="${pageNumber} != 1">
+<!--                            <li class="page-item" th:if="${listEmployes.hasPrevious()}">-->
+<!--                                <a href="http://localhost:8080/employes?page=0&amp;size=10&amp;sortDirection=ASC&amp;sortProperty=matricule#" class="page-link">-->
+<!--                                <a-->
+<!--                                    th:if="${previousPage}>=0"-->
+
+<!--                                    th:href="-->
+<!--                                    @{/employes-->
+<!--                                        (-->
+<!--                                            page=${previousPage},-->
+<!--                                            size=${param.size},-->
+<!--                                            sortDirection=${param.sortDirection},-->
+<!--                                            sortProperty=${param.sortProperty}-->
+<!--                                        )-->
+<!--                                    }" class="page-link">-->
+<!--                                    «-->
+<!--                                </a>-->
+                                <a
+                                    th:href="
+                                    @{/employes
+                                        (
+                                            page=${previousPage},
+                                            size=${param.size},
+                                            sortDirection=${param.sortDirection},
+                                            sortProperty=${param.sortProperty}
+                                        )
+                                    }" class="page-link">
+                                    «
+                                </a>
+                            </li>
+                            
+                            <li class="page-item">
+                                <a href="http://localhost:8080/employes?page=0&amp;size=10&amp;sortDirection=ASC&amp;sortProperty=matricule#" class="page-link">
+<!--                                    Page <span th:text="${listeEmployes.getNumber()}+1">99</span>-->
+                                    Page <span th:text="${pageNumber}">99</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+<!--                                <a class="page-link" href="http://localhost:8080/employes?page=1&amp;size=10&amp;sortDirection=ASC&amp;sortProperty=matricule">-->
+                                <a
+                                    th:if="${nextPage}<${listeEmployes.getTotalPages()}"
+
+                                    th:href="
+                                    @{/employes
+                                        (
+                                            page=${nextPage},
+                                            size=${param.size},
+                                            sortDirection=${param.sortDirection},
+                                            sortProperty=${param.sortProperty}
+                                        )
+                                    }" class="page-link">
+                                    »
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body></html>

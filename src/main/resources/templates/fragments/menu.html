@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/header :: head">
+
+    </head>
+    <body>
+
+        <div th:replace="fragments/header :: menu">
+
+        </div>
+
+
+        <div th:fragment="commercial" th:if="${emp instanceof T(com.ipiecoles.java.java320.model.Commercial)}" class="col-lg-6">
+            <label class="form-control-label" for="performance">Performance</label>
+            <input type="number" th:value="${emp.performance}" class="form-control" name="performance" id="performance">
+            <label class="form-control-label" for="caAnnuel">CA Annuel</label>
+            <div class="input-group">
+                <input type="number" value="2404.0" th:value="${emp.caAnnuel}" class="form-control" name="caAnnuel" id="caAnnuel">
+                <div class="input-group-append">
+                    <span class="input-group-text">€</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div th:fragment="manager" th:if="${emp.id!=null and emp instanceof T(com.ipiecoles.java.java320.model.Manager)}" class="col-lg-6">
+            <label class="form-control-label">Equipe</label>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="tech : ${emp.equipe}">
+                    <a th:href="'/employes/' + ${tech.id}">
+                        <span th:text="${tech.prenom}"></span> <span th:text="${tech.nom}"></span>
+                        <span class="badge badge-primary float-right" th:text="${tech.matricule}"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+
+        <div th:fragment="technicien" th:if="${emp instanceof T(com.ipiecoles.java.java320.model.Technicien)}" class="col-lg-6">
+            <label class="form-control-label" for="grade">Grade</label>
+            <input type="number" th:value="${emp.grade}" class="form-control" name="grade" id="grade">
+            <label th:if="${emp.id}" class="form-control-label">Manager</label>
+            <ul class="list-group">
+                <li class="list-group-item" th:if="${emp.manager}">
+                    <a th:href="'/employes/' + ${emp.manager.id}">
+                        <span th:text="${emp.manager.prenom}"></span> <span th:text="${emp.manager.nom}"></span>
+                        <span class="badge badge-primary float-right" th:text="${emp.manager.matricule}"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+    </body>
+</html>
